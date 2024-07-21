@@ -176,6 +176,7 @@ color_guide = dbc.Card([
 
 # Inicialización de la app Dash
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.BOOTSTRAP], title='MicroFinder')
+server = app.server
 
 # Barra lateral actualizada
 sidebar = html.Div(
