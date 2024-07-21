@@ -3,6 +3,9 @@
 ## Descripción
 MicroFinder es una aplicación diseñada para detectar microplásticos en imágenes de muestras de agua de todo el mundo. Ayuda a los investigadores, activistas y ciudadanos preocupados a identificar la presencia de estas partículas contaminantes y contribuir a la conservación del medio ambiente. Este Proyecto fue realizado en el marco del Hackathon Co-Afina 2024. 
 
+Para mas detalles sobre el proceso de desarrollo y entrenamiento del modelo predictivo utilizado en el proyecto, pueden seguirlo en el notebook llamado 'Model_Training_to_Detect_Microplastics'. Las herramientas utilizadas para el desarrollo y entrenamiento fue PyTorch con su framework torchvision, con la ayuda de estas 2, se tomaron las imagenes de los datos en formato COCO, se procesaron y se utilizaron para entrenar un modelo (FasterRCNN_ResNet50_FPN_V2), evaluando y optimizando su precision para identificar microplasticos.
+
+
 ## Características
 - **Carga de Imágenes:** Sube fotos de muestras de agua directamente desde tu dispositivo.
 - **Análisis Automático:** MicroFinder procesa las imágenes y señala posibles microplásticos.
