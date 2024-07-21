@@ -31,10 +31,10 @@ MicroFinder es una aplicación diseñada para detectar microplásticos en imáge
 ## Créditos
 Este proyecto fue desarrollado por el equipo de Ctrl+Alt+Defeat, un grupo de entusiastas de la ciencia, tecnología e innovación de alto impacto.
 
-Roberth Marcano - Desarrollador de Modelo de Machine Learning
-Carmelo Garcia - Desarrollador de Modelo de Machine Learning
-Javier Salcedo - Diseñador - Project Manager
-Gabriel Cardona - Diseñador UX/UI - Ingeniero DevOps
+- Roberth Marcano - Desarrollador de Modelo de Machine Learning
+- Carmelo Garcia - Desarrollador de Modelo de Machine Learning
+- Javier Salcedo - Diseñador - Project Manager
+- Gabriel Cardona - Diseñador UX/UI - Ingeniero DevOps
 
 ## Licencia
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
