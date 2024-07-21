@@ -19,6 +19,15 @@ from torchvision.transforms import v2 as T
 import numpy as np
 from io import StringIO
 
+import gdown
+import os
+
+# same as the above, but with the file ID
+if not os.path.exists('model_scripted2.pb'):
+    id = "139NpHnMTQj5OcSRxMvJ7fPjOhaRSsbAg"
+    gdown.download(id=id, output='model_scripted2.pb')
+
+
 # Configuración del modelo
 if torch.cuda.is_available():
     model = torch.load('model_scripted2.pb')
@@ -102,6 +111,7 @@ custom_styles = {
         'margin': 'auto'
     },
     'body-text': {
+        'text-align':'justify',
         'font-size': '22px'  # Aumenta el tamaño de texto base
     },
     'section-title': {
@@ -181,7 +191,7 @@ server = app.server
 # Barra lateral actualizada
 sidebar = html.Div(
     [
-        html.H2("MicroFinder", className="display-4"),
+        html.H4("MicroFinder", className="display-4"),
         html.Hr(),
         html.P(
             "Detecta Microplásticos fácil y rápido", className="lead"
@@ -310,7 +320,8 @@ detector_page = html.Div([
                     dbc.Spinner(children=html.Div(id='spinner-1'), color='primary', type="grow"),
                     dbc.Row([
                         dbc.Col(dcc.Dropdown(id='spinner-2', placeholder="Selecciona un objeto"), md=6),
-                        dbc.Col(dcc.Dropdown(id='spinner-3', placeholder="Selecciona un color"), md=6)
+                        dbc.Col(dcc.Dropdown(id='spinner-3', placeholder="Selecciona un color",
+                                            options=[{'label': color, 'value':color_options[color]} for color in color_options.keys()]), md=6)
                     ], className="mt-3"),
                 ])
             ], className="mb-4")
@@ -608,6 +619,7 @@ def click_coord(e):
 def show_plot(value):
     if not Gdata.detected_objects:
         raise PreventUpdate
+    print(Gdata.detected_objects)
     data = pd.DataFrame([{'color': obj.classification or 'Otros'} for obj in Gdata.detected_objects])
     fig = px.histogram(data, x='color')
     return fig, data['color'].value_counts().to_json(orient='index')
