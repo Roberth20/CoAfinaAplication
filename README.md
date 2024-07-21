@@ -1,4 +1,4 @@
-# MicroFinder: Detección de Microplásticos en Costas y Ríos
+# MicroFinder: Detección de Microplásticos en todo el Mundo.
 
 ## Descripción
 MicroFinder es una aplicación diseñada para detectar microplásticos en imágenes de muestras de agua de todo el mundo. Ayuda a los investigadores, activistas y ciudadanos preocupados a identificar la presencia de estas partículas contaminantes y contribuir a la conservación del medio ambiente. Este Proyecto fue realizado en el marco del Hackathon Co-Afina 2024. 
