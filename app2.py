@@ -656,4 +656,4 @@ def export_csv(n_clicks, data):
 
 # Ejecutar la app
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=False, host='0.0.0.0')
