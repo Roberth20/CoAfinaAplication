@@ -676,4 +676,6 @@ def export_csv(n_clicks, data):
 
 # Ejecutar la app
 if __name__ == '__main__':
-    app.run_server(debug=False, host='0.0.0.0')
+    port = os.environ.get('dash_port')
+    debug = os.environ.get('dash_debug') == 'True'
+    app.run_server(debug=debug, host='0.0.0.0', port=port)
