@@ -23,21 +23,21 @@ import gdown
 import os
 
 # Revisamos si el dispositivo tiene el modelo y se descargar en caso contrario
-if not os.path.exists('model_scripted2.pb'):
-    id = "139NpHnMTQj5OcSRxMvJ7fPjOhaRSsbAg"
-    gdown.download(id=id, output='model_scripted2.pb')
+#if not os.path.exists('model_scripted2.pb'):
+ #   id = "139NpHnMTQj5OcSRxMvJ7fPjOhaRSsbAg"
+  #  gdown.download(id=id, output='model_scripted2.pb')
 
 
 # Configuración del modelo
-if torch.cuda.is_available():
-    model = torch.load('model_scripted2.pb')
-    device = torch.device('cuda')
-else:
-    model = torch.load('model_scripted2.pb', map_location=torch.device('cpu'))
-    device = torch.device('cpu')
+#if torch.cuda.is_available():
+#    model = torch.load('model_scripted2.pb')
+#    device = torch.device('cuda')
+#else:
+#    model = torch.load('model_scripted2.pb', map_location=torch.device('cpu'))
+#    device = torch.device('cpu')
 
 # Denifir en modo de evaluacion
-model.eval()
+#model.eval()
 
 
 # Definición de transformaciones
@@ -488,10 +488,26 @@ def process_predictions(predictions):
             if score.item() > 0.09]
 
 # Funcion para grafica de identificadores de objetos
-def plot_image_with_boxes(image, detected_objects, selected_index=None):
+def plot_image_with_boxes(image, detected_objects=None, selected_index=None):
     fig = go.Figure()
     img_width, img_height = image.size
     fig.add_trace(go.Image(z=image))
+    fig.update_xaxes(visible=False)
+    fig.update_yaxes(visible=False)
+    fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_layout(
+        xaxis=dict(
+            scaleanchor="y",
+            scaleratio=1,
+            range=[0, img_width]
+        ),
+        yaxis=dict(
+            scaleanchor="x",
+            scaleratio=1,
+            range=[img_height, 0]
+        )
+    )
+    return fig
 
     selected_color = 'rgb(255, 80, 0)'  # Naranja brillante para selección
     default_color = 'purple'  # Color por defecto para objetos no clasificados
@@ -533,21 +549,6 @@ def plot_image_with_boxes(image, detected_objects, selected_index=None):
             opacity=1
         )
 
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-    fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
-    fig.update_layout(
-        xaxis=dict(
-            scaleanchor="y",
-            scaleratio=1,
-            range=[0, img_width]
-        ),
-        yaxis=dict(
-            scaleanchor="x",
-            scaleratio=1,
-            range=[img_height, 0]
-        )
-    )
     return fig
 
 
@@ -575,14 +576,14 @@ def update_output(contents):
         imgTensor = pil_to_tensor(image)
         t = torch.tensor(np.array(imgTensor) / 255).float()
         t = eval_transform(t)
-        t = t[:3, ...].to(device)
-        predictions = model([t, ])
+        #t = t[:3, ...].to(device)
+        #predictions = model([t, ])
         # Procesado de prediccion
-        Gdata.detected_objects = process_predictions(predictions)
+        #Gdata.detected_objects = process_predictions(predictions)
         # Creacion de imagen y etiquetas
         fig = plot_image_with_boxes(image, Gdata.detected_objects, selected_index=0)
         # Creacion de opciones para el menu interactivo de los objetos identificados
-        object_options = [{'label': obj.label, 'value': i} for i, obj in enumerate(Gdata.detected_objects)]
+        object_options = [{'label': 'Obj 1', 'value': '1'}]
 
         # Actualizar el centro del mapa si se encontró información GPS
         if gps_info:
@@ -603,6 +604,7 @@ def update_output(contents):
 def update_classification(selected_object, selected_color):
     if selected_object is not None:
         if selected_color is not None:
+            return dash.no_update
             Gdata.detected_objects[selected_object].classification = selected_color
         fig = plot_image_with_boxes(Gdata.img, Gdata.detected_objects, selected_index=selected_object)
         return fig
@@ -634,6 +636,7 @@ def click_coord(e):
               Input('spinner-3', 'value'),
               prevent_initial_call=True)
 def show_plot(value):
+    raise PreventUpdate
     if not Gdata.detected_objects:
         raise PreventUpdate
     # Carga de datos de color a forma tabular
